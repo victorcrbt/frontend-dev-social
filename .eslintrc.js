@@ -18,6 +18,7 @@ module.exports = {
   plugins: ['react', 'prettier', 'react-hooks', 'jsx-a11y', 'import'],
   rules: {
     'prettier/prettier': 'error',
+    'react/jsx-props-no-spreading': 'off',
     'react/jsx-filename-extension': [
       'warn',
       {
