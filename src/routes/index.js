@@ -6,6 +6,7 @@ import Route from './Route';
 import SignIn from '~/pages/SignIn';
 import SignUp from '~/pages/SignUp';
 import RecoveryPass from '~/pages/RecoveryPass';
+import ResetPassword from '~/pages/ResetPassword';
 import Home from '~/pages/Home';
 
 export default function Routes() {
@@ -14,6 +15,7 @@ export default function Routes() {
       <Route exact path="/" component={SignIn} />
       <Route path="/cadastro" component={SignUp} />
       <Route path="/recuperar_senha" component={RecoveryPass} />
+      <Route path="/redefinir_senha/:token" component={ResetPassword} />
 
       <Route path="/inicio" component={Home} isPrivate />
     </Switch>
