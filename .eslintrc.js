@@ -33,4 +33,11 @@ module.exports = {
     'react-hooks/rules-of-hooks': 'off',
     'react-hooks/exhaustive-deps': 'warn',
   },
+  settings: {
+    'import/resolver': {
+      'babel-plugin-root-import': {
+        rootPathSuffix: 'src',
+      },
+    },
+  },
 };
