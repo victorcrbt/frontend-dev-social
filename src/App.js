@@ -1,7 +1,9 @@
-import React from "react";
+import React from 'react';
+
+import './config/ReactotronConfig';
 
 function App() {
-  return <div></div>;
+  return <div />;
 }
 
 export default App;
