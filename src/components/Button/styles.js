@@ -11,9 +11,10 @@ export const Container = styled.button`
   background: #bc40f4;
   color: #fff;
   font-weight: bold;
+  transition: background 0.2s ease;
 
   &:hover {
-    background: ${lighten(0.03, '#bc40f4')};
+    background: ${lighten(0.06, '#bc40f4')};
   }
 
   ${props =>
