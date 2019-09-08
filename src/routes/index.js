@@ -5,6 +5,7 @@ import Route from './Route';
 
 import SignIn from '~/pages/SignIn';
 import SignUp from '~/pages/SignUp';
+import RecoveryPass from '~/pages/RecoveryPass';
 import Home from '~/pages/Home';
 
 export default function Routes() {
@@ -12,6 +13,7 @@ export default function Routes() {
     <Switch>
       <Route exact path="/" component={SignIn} />
       <Route path="/cadastro" component={SignUp} />
+      <Route path="/recuperar_senha" component={RecoveryPass} />
 
       <Route path="/inicio" component={Home} isPrivate />
     </Switch>
