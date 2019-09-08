@@ -32,7 +32,7 @@ export default function RecoveryPass() {
           onChange={e => setEmail(e.target.value)}
         />
 
-        <Button type="submit">Criar conta</Button>
+        <Button type="submit">Enviar</Button>
       </Form>
 
       <Link to="/">Voltar a tela de login.</Link>
