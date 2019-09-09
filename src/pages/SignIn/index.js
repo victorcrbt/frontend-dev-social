@@ -20,7 +20,7 @@ export default function SignIn() {
   async function handleSubmit(e) {
     e.preventDefault();
 
-    dispatch(signInRequest(email, password));
+    dispatch(signInRequest(email, password, { setPassword }));
   }
 
   return (
