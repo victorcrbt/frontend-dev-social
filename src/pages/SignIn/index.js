@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import * as yup from 'yup';
 
 import { signInRequest } from '~/store/modules/auth/actions';
 
@@ -11,16 +12,32 @@ import logo from '~/assets/devsocial@2x.png';
 
 import { Container, Form, Logo } from './styles';
 
+const schema = yup.object().shape({
+  email: yup
+    .string()
+    .email('Formato de e-mail inválido.')
+    .required('O e-mail é obrigatório.'),
+  password: yup.string().required('A senha é obrigatória.'),
+});
+
 export default function SignIn() {
   const dispatch = useDispatch();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [errors, setErrors] = useState(null);
 
   async function handleSubmit(e) {
     e.preventDefault();
+    setErrors(null);
 
-    dispatch(signInRequest(email, password, { setPassword }));
+    try {
+      await schema.validate({ email, password }, { abortEarly: false });
+
+      dispatch(signInRequest(email, password, { setPassword }));
+    } catch (err) {
+      setErrors(err.inner);
+    }
   }
 
   return (
@@ -30,15 +47,19 @@ export default function SignIn() {
       <Form onSubmit={handleSubmit}>
         <TextInput
           autoFocus
+          name="email"
           placeholder="Digite seu e-mail"
           value={email}
           onChange={e => setEmail(e.target.value)}
+          errors={errors}
         />
         <TextInput
+          name="password"
           placeholder="Digite sua senha"
           type="password"
           value={password}
           onChange={e => setPassword(e.target.value)}
+          errors={errors}
         />
 
         <Button type="submit">Entrar</Button>
