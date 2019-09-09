@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+
+import { signInRequest } from '~/store/modules/auth/actions';
 
 import TextInput from '~/components/TextInput';
 import Button from '~/components/Button';
@@ -9,11 +12,15 @@ import logo from '~/assets/devsocial@2x.png';
 import { Container, Form, Logo } from './styles';
 
 export default function SignIn() {
+  const dispatch = useDispatch();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   async function handleSubmit(e) {
     e.preventDefault();
+
+    dispatch(signInRequest(email, password));
   }
 
   return (
