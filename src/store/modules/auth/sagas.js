@@ -6,6 +6,7 @@ import { signInSuccess, singFailure } from './actions';
 
 export function* signIn({ payload }) {
   const { email, password } = payload;
+  const { setPassword } = payload.functions;
 
   try {
     const response = yield call(api.post, '/sessions', { email, password });
@@ -14,6 +15,7 @@ export function* signIn({ payload }) {
 
     yield put(signInSuccess(token, user));
   } catch (err) {
+    setPassword('');
     yield put(singFailure());
   }
 }
