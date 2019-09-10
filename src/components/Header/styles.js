@@ -103,13 +103,16 @@ export const Submenu = styled.div`
   top: 50px;
   overflow: hidden;
 
-  background: rgba(0, 0, 0, 0.4);
-
-  a {
+  a,
+  button {
+    width: 100%;
     display: block;
     padding: 10px;
     color: #fafafa;
     font-weight: bold;
+    background: rgba(0, 0, 0, 0.4);
+    border: 0;
+    text-align: left;
 
     &:hover {
       background: rgba(0, 0, 0, 0.2);

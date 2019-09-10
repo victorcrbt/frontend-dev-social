@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+
 import { MdSearch } from 'react-icons/md';
+
+import { signOut } from '~/store/modules/auth/actions';
 
 import api from '~/services/api';
 
@@ -21,6 +24,7 @@ import {
 } from './styles';
 
 export default function Header() {
+  const dispatch = useDispatch();
   const profile = useSelector(state => state.user.profile);
 
   const [search, setSearch] = useState('');
@@ -59,9 +63,9 @@ export default function Header() {
 
           <Submenu className="submenu">
             <Link to="/perfil">Perfil</Link>
-            <Link to="#" onClick={() => console.log('teste')}>
+            <button type="button" onClick={() => dispatch(signOut())}>
               Sair
-            </Link>
+            </button>
           </Submenu>
         </User>
       </Content>

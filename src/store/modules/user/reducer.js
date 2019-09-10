@@ -13,6 +13,7 @@ export default function auth(state = INITIAL_STATE, action) {
         draft.profile = payload.user;
         break;
       }
+      case '@auth/SIGN_OUT':
       case '@auth/SIGN_FAILURE': {
         draft.profile = null;
         break;
