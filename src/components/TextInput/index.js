@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
 
-import { Container, Input } from './styles';
+import { Container, InputWrapper, Input } from './styles';
 
 import FormContext from '../Form/Context';
 
-export default function TextInput({ name, style, disabled, ...rest }) {
+export default function TextInput({ name, style, disabled, icon, ...rest }) {
   const errors = useContext(FormContext);
 
   const [err, setErr] = useState(null);
@@ -18,7 +18,17 @@ export default function TextInput({ name, style, disabled, ...rest }) {
 
   return (
     <Container style={style} error={err} disabled={disabled}>
-      <Input name={name} disabled={disabled} error={err} {...rest} />
+      <InputWrapper>
+        {icon && <label htmlFor={name}>{icon}</label>}
+
+        <Input
+          id={name}
+          name={name}
+          disabled={disabled}
+          error={err}
+          {...rest}
+        />
+      </InputWrapper>
       <span>{err}</span>
     </Container>
   );

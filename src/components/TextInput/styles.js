@@ -5,6 +5,9 @@ export const Container = styled.div`
   width: 100%;
   margin: 6px 0;
 
+  display: flex;
+  align-items: center;
+
   ${props =>
     props.disabled &&
     css`
@@ -23,6 +26,30 @@ export const Container = styled.div`
       css`
         opacity: 1;
       `};
+  }
+`;
+
+export const InputWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  position: relative;
+
+  display: flex;
+  align-items: center;
+
+  label {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: -20px;
+    background: #fafafa;
+    height: 100%;
+    padding-left: 5px;
+
+    display: flex;
+    align-items: center;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
   }
 `;
 
