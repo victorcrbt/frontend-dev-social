@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 
 import { Container } from './styles';
 
@@ -8,24 +8,35 @@ export default function Form({ children, schema, onSubmit, ...rest }) {
   const [err, setErr] = useState(null);
   const [fields, setFields] = useState({});
 
-  function handleSetFields(inputFields) {
-    const fieldsData = {};
+  const handleSetFields = useCallback(
+    inputFields => {
+      const fieldsData = {};
 
-    inputFields.map(child => {
-      if (child.props.type === 'submit') return;
+      if (!Array.isArray(children)) {
+        return setFields({ [children.props.name]: children.props.value });
+      }
 
-      fieldsData[child.props.name] = child.props.value;
-    });
+      inputFields.map(child => {
+        if (child.props.type === 'submit') return;
 
-    setFields(fieldsData);
-  }
+        fieldsData[child.props.name] = child.props.value;
+      });
+
+      setFields(fieldsData);
+    },
+    [children]
+  );
 
   useEffect(() => {
     handleSetFields(children);
-  }, [children, onSubmit]);
+  }, [children, handleSetFields, onSubmit]);
 
   async function handleSubmit(e) {
     e.preventDefault();
+
+    if (!schema) {
+      return onSubmit();
+    }
 
     try {
       await schema.validate(fields, { abortEarly: false });
