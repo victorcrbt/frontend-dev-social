@@ -1,11 +1,25 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import { Container, Input } from './styles';
 
+import FormContext from '../Form/Context';
+
 export default function TextInput({ name, style, disabled, ...rest }) {
+  const errors = useContext(FormContext);
+
+  const [err, setErr] = useState(null);
+
+  useEffect(() => {
+    setErr(null);
+    if (errors !== null && errors !== undefined) {
+      errors.map(error => error.path === name && setErr(error.message));
+    }
+  }, [errors, name]);
+
   return (
-    <Container style={style} disabled={disabled}>
-      <Input name={name} disabled={disabled} {...rest} />
+    <Container style={style} error={err} disabled={disabled}>
+      <Input name={name} disabled={disabled} error={err} {...rest} />
+      <span>{err}</span>
     </Container>
   );
 }
