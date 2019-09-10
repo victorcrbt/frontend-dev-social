@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import { darken } from 'polished';
 
+import Form from '~/components/Form';
+
 export const Container = styled.div`
   width: 1000px;
 
@@ -21,7 +23,7 @@ export const Container = styled.div`
   }
 `;
 
-export const Form = styled.form`
+export const RegisterForm = styled(Form)`
   width: 100%;
   max-width: 315px;
   margin-bottom: 10px;
