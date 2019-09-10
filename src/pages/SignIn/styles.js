@@ -2,11 +2,16 @@ import styled from 'styled-components';
 import { darken } from 'polished';
 
 export const Container = styled.div`
-  width: 1000px;
+  width: 100%;
+  max-width: 315px;
 
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  .recovery {
+    font-size: 13px;
+  }
 
   a {
     margin-bottom: 5px;
@@ -19,12 +24,6 @@ export const Container = styled.div`
       color: ${darken(0.1, '#fff')};
     }
   }
-`;
-
-export const Form = styled.form`
-  width: 100%;
-  max-width: 315px;
-  margin-bottom: 10px;
 `;
 
 export const Logo = styled.img`
