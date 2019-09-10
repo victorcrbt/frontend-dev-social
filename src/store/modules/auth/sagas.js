@@ -1,4 +1,5 @@
 import { all, takeLatest, put, call } from 'redux-saga/effects';
+import { toast } from 'react-toastify';
 
 import api from '~/services/api';
 import history from '~/services/history';
@@ -15,9 +16,20 @@ export function* signIn({ payload }) {
     const { token, user } = response.data;
 
     yield put(signInSuccess(token, user));
+    toast.success('Login realizado com sucesso!');
   } catch (err) {
     setPassword('');
     yield put(singFailure());
+
+    switch (err.response.data.error) {
+      case 'Invalid credentials.': {
+        toast.error('Credencias inválidas.');
+        break;
+      }
+      default: {
+        toast.error(err.response.data.error);
+      }
+    }
   }
 }
 
