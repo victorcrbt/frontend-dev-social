@@ -37,7 +37,7 @@ export function* signUp({ payload }) {
   const { first_name, last_name, email, password, phone } = payload;
 
   try {
-    const response = yield call(api.post, '/users', {
+    yield call(api.post, '/users', {
       first_name,
       last_name,
       email,
@@ -45,9 +45,24 @@ export function* signUp({ payload }) {
       phone,
     });
 
+    toast.success('Cadastro realizado com sucesso!');
     history.push('/');
   } catch (err) {
     yield put(singFailure());
+
+    switch (err.response.data.error) {
+      case 'The email is already used.': {
+        toast.error('O e-mail informado já está em uso.');
+        break;
+      }
+      case 'The phone number is already used.': {
+        toast.error('O telefone informado já está em uso.');
+        break;
+      }
+      default: {
+        toast.error(err.response.data.error);
+      }
+    }
   }
 }
 
