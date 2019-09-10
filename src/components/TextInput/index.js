@@ -1,8 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import { Container, Input } from './styles';
 
-export default function TextInput({ name, style, disabled, errors, ...rest }) {
+import FormContext from '../Form/Context';
+
+export default function TextInput({ name, style, disabled, ...rest }) {
+  const errors = useContext(FormContext);
+
   const [err, setErr] = useState(null);
 
   useEffect(() => {

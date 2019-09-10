@@ -37,11 +37,12 @@ export const Input = styled.input`
   border: 0;
   border-radius: 5px;
   font-size: 16px;
+  transition: box-shadow 0.4s ease;
 
   ${props =>
     props.error &&
     css`
-      border: 1px solid red;
+      box-shadow: 0px 0px 8px 2px #ff4040;
     `}
 
   &::placeholder {
