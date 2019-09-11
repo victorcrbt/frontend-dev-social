@@ -36,6 +36,8 @@ export default function Form({ children, schema, onSubmit, ...rest }) {
   async function handleSubmit(e) {
     e.preventDefault();
 
+    if (!onSubmit) return;
+
     if (!schema) {
       return onSubmit();
     }
