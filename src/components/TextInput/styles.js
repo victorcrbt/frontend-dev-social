@@ -5,8 +5,6 @@ export const Container = styled.div`
   width: 100%;
   margin: 6px 0;
 
-  display: flex;
-  align-items: center;
 
   ${props =>
     props.disabled &&
