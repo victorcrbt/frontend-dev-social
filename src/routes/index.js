@@ -8,6 +8,7 @@ import SignUp from '~/pages/SignUp';
 import RecoveryPass from '~/pages/RecoveryPass';
 import ResetPassword from '~/pages/ResetPassword';
 import Home from '~/pages/Home';
+import Profile from '~/pages/Profile';
 
 export default function Routes() {
   return (
@@ -18,6 +19,7 @@ export default function Routes() {
       <Route path="/redefinir_senha/:token" component={ResetPassword} />
 
       <Route path="/inicio" component={Home} isPrivate />
+      <Route path="/perfil" component={Profile} isPrivate />
     </Switch>
   );
 }
