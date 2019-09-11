@@ -44,6 +44,8 @@ export default function Header() {
         },
       });
 
+      console.log(response.data);
+
       setSearchResults(response.data);
     }
 
@@ -62,7 +64,7 @@ export default function Header() {
             name="search"
             value={user}
             onChange={e => setUser(e.target.value)}
-            onBlur={() => setTimeout(() => setSearchResults([]), 100)}
+            onBlur={() => setTimeout(() => setSearchResults([]), 500)}
             icon={<MdSearch size={20} color="#999" />}
           />
 
@@ -73,7 +75,14 @@ export default function Header() {
                   key={result.id}
                   onClick={() => history.push(`/usuario/${result.id}`)}
                 >
-                  <ResultImage src={result.avatar.url} alt="User avatar" />
+                  <ResultImage
+                    src={
+                      result.avatar
+                        ? result.avatar.url
+                        : 'http://localhost:3333/static/avatars/default.png'
+                    }
+                    alt="User avatar"
+                  />
                   {result.first_name}
                   {` `}
                   {result.last_name}
