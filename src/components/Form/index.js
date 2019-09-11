@@ -17,7 +17,9 @@ export default function Form({ children, schema, onSubmit, ...rest }) {
       }
 
       inputFields.map(child => {
-        if (child.props.type === 'submit') return;
+        if (typeof child === 'boolean') return;
+        if (!child.props) return;
+        if (child.props.type !== 'text') return;
 
         fieldsData[child.props.name] = child.props.value;
       });

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
@@ -7,6 +7,7 @@ import { MdSearch } from 'react-icons/md';
 import { signOut } from '~/store/modules/auth/actions';
 
 import api from '~/services/api';
+import history from '~/services/history';
 
 import logo from '~/assets/devsocial.png';
 
@@ -16,6 +17,9 @@ import {
   Logo,
   SearchForm,
   SearchInput,
+  ResultList,
+  ResultItem,
+  ResultImage,
   User,
   UserAvatar,
   UserName,
@@ -27,27 +31,56 @@ export default function Header() {
   const dispatch = useDispatch();
   const profile = useSelector(state => state.user.profile);
 
-  const [search, setSearch] = useState('');
+  const [user, setUser] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
 
-  async function handleSubmit() {
-    const response = await api.get('/users');
+  useEffect(() => {
+    if (user === '') return setSearchResults([]);
 
-    console.log(response);
-  }
+    async function searchUser() {
+      const response = await api.get('/users', {
+        params: {
+          user,
+        },
+      });
+
+      setSearchResults(response.data);
+    }
+
+    searchUser();
+  }, [user]);
 
   return (
     <Container>
       <Content>
         <Logo src={logo} alt="DevSocial" />
 
-        <SearchForm onSubmit={handleSubmit}>
+        <SearchForm>
           <SearchInput
+            autoComplete="off"
             placeholder="Digite o nome do usuário..."
             name="search"
-            value={search}
-            onChange={e => setSearch(e.target.value)}
+            value={user}
+            onChange={e => setUser(e.target.value)}
+            onBlur={() => setTimeout(() => setSearchResults([]), 100)}
             icon={<MdSearch size={20} color="#999" />}
           />
+
+          {searchResults.length > 0 && (
+            <ResultList>
+              {searchResults.map(result => (
+                <ResultItem
+                  key={result.id}
+                  onClick={() => history.push(`/usuario/${result.id}`)}
+                >
+                  <ResultImage src={result.avatar.url} alt="User avatar" />
+                  {result.first_name}
+                  {` `}
+                  {result.last_name}
+                </ResultItem>
+              ))}
+            </ResultList>
+          )}
 
           <button type="submit">Pesquisar</button>
         </SearchForm>

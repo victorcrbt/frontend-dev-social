@@ -1,4 +1,5 @@
 import styled, { keyframes } from 'styled-components';
+import { darken } from 'polished';
 
 import Form from '~/components/Form';
 import TextInput from '~/components/TextInput';
@@ -35,6 +36,7 @@ export const Logo = styled.img`
 `;
 
 export const SearchForm = styled(Form)`
+  position: relative;
   max-width: 300px;
   height: 100%;
   margin: 0;
@@ -51,6 +53,55 @@ export const SearchForm = styled(Form)`
 export const SearchInput = styled(TextInput)`
   height: 30px;
   margin: 0;
+`;
+
+export const ResultList = styled.ul`
+  position: absolute;
+  top: 50px;
+  width: calc(100% + 20px);
+  padding: 0;
+  margin: 0;
+  margin-left: -20px;
+  max-height: 200px;
+
+  border-radius: 5px;
+  list-style: none;
+  background: #fafafa;
+  cursor: pointer;
+  overflow: hidden;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    overflow: hidden;
+    width: 5px;
+    margin-right: 2px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #999;
+    -webkit-border-radius: 2.5px;
+    border-radius: 2.5px;
+  }
+`;
+
+export const ResultItem = styled.li`
+  padding: 10px;
+
+  display: flex;
+  align-items: center;
+
+  &:hover {
+    background: ${darken(0.08, '#fafafa')};
+  }
+`;
+
+export const ResultImage = styled.img`
+  width: 25px;
+  height: 25px;
+  border-radius: 12.5px;
+  margin-right: 10px;
 `;
 
 export const User = styled.div`
