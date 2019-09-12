@@ -20,6 +20,7 @@ export default function Form({ children, schema, onSubmit, ...rest }) {
         if (typeof child === 'boolean') return;
         if (!child.props) return;
         if (child.props.type === 'submit') return;
+        if (child.props.type === 'button') return;
 
         return (fieldsData[child.props.name] = child.props.value);
       });

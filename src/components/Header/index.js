@@ -45,8 +45,6 @@ export default function Header() {
         },
       });
 
-      console.log(response.data);
-
       setSearchResults(response.data);
     }
 
