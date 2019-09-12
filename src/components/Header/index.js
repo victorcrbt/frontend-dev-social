@@ -56,7 +56,9 @@ export default function Header() {
   return (
     <Container>
       <Content>
-        <Logo src={logo} alt="DevSocial" />
+        <Link to="/inicio">
+          <Logo src={logo} alt="DevSocial" />
+        </Link>
 
         <Right>
           <SearchForm>
@@ -113,6 +115,7 @@ export default function Header() {
             <Triangle className="triangle" />
 
             <Submenu className="submenu">
+              <Link to="/inicio">Inicio</Link>
               <Link to="/perfil">Perfil</Link>
               <button type="button" onClick={() => dispatch(signOut())}>
                 Sair
