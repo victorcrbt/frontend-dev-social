@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 import Form from '~/components/Form';
 import TextInput from '~/components/TextInput';
+import AvatarInput from '~/components/AvatarInput';
 import Button from '~/components/Button';
 
 export const Container = styled.div`
@@ -19,6 +20,12 @@ export const ProfileForm = styled(Form)`
 
 export const Input = styled(TextInput)`
   height: 40px;
+`;
+
+export const ImageInput = styled(AvatarInput)`
+  display: block;
+  margin: 0 auto !important;
+  border: 1px solid red;
 `;
 
 export const Separator = styled.div`

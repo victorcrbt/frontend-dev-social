@@ -6,7 +6,7 @@ import { updateProfileSuccess } from './actions';
 import api from '~/services/api';
 
 export function* updateProfile({ payload }) {
-  const { first_name, last_name, email, phone, ...rest } = payload.data;
+  const { first_name, last_name, file, email, phone, ...rest } = payload.data;
   const { setOldPassword, setPassword, setConfirmPassword } = payload.functions;
 
   const data = {
@@ -16,6 +16,12 @@ export function* updateProfile({ payload }) {
     phone: phone || null,
     ...(rest.oldPassword || rest.password ? rest : {}),
   };
+
+  if (file) {
+    const response = yield call(api.post, '/avatars', file);
+
+    data.avatar_id = response.data.file.id;
+  }
 
   try {
     const response = yield call(api.put, '/users', data);

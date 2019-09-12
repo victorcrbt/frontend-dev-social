@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { updateProfileRequest } from '~/store/modules/user/actions';
@@ -6,9 +6,12 @@ import { updateProfileRequest } from '~/store/modules/user/actions';
 import phoneMask from '~/util/inputMasks/phoneNumberMask';
 import updateProfileSchema from '~/validators/profileUpdateValidator';
 
+import AvatarInput from '~/components/AvatarInput';
+
 import {
   Container,
   ProfileForm,
+  ImageInput,
   Input,
   Separator,
   Title,
@@ -29,6 +32,7 @@ export default function Profile() {
   const [oldPassword, setOldPassword] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [file, setFile] = useState('');
 
   function handleSubmit() {
     dispatch(
@@ -38,6 +42,7 @@ export default function Profile() {
           last_name: lastName,
           email,
           phone,
+          file,
           oldPassword,
           password,
           confirmPassword,
@@ -54,6 +59,12 @@ export default function Profile() {
   return (
     <Container>
       <ProfileForm onSubmit={handleSubmit} schema={updateProfileSchema}>
+        <ImageInput
+          style={{ margin: '0 auto 20px auto' }}
+          setFile={setFile}
+          defaultPreview={profile.avatar ? profile.avatar.url : null}
+        />
+
         <Input
           name="first_name"
           placeholder="Digite seu nome"
