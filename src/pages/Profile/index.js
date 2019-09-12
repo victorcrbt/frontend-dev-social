@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-import phoneMask from './phoneNumberMask';
+import { updateProfileRequest } from '~/store/modules/user/actions';
+
+import phoneMask from '~/util/inputMasks/phoneNumberMask';
 
 import {
   Container,
@@ -14,6 +16,7 @@ import {
 } from './styles';
 
 export default function Profile() {
+  const dispatch = useDispatch();
   const profile = useSelector(state => state.user.profile);
 
   const [firstName, setFirstName] = useState(profile.first_name || '');
@@ -27,7 +30,17 @@ export default function Profile() {
   const [confirmPassword, setConfirmPassword] = useState('');
 
   function handleSubmit() {
-    console.log(phone);
+    dispatch(
+      updateProfileRequest({
+        first_name: firstName,
+        last_name: lastName,
+        email,
+        phone,
+        oldPassword,
+        password,
+        confirmPassword,
+      })
+    );
   }
 
   return (

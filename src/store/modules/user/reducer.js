@@ -9,6 +9,7 @@ export default function auth(state = INITIAL_STATE, action) {
 
   return produce(state, draft => {
     switch (type) {
+      case '@user/UPDATE_PROFILE_SUCCESS':
       case '@auth/SIGN_IN_SUCCESS': {
         draft.profile = payload.user;
         break;
