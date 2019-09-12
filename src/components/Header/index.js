@@ -95,7 +95,14 @@ export default function Header() {
         </SearchForm>
 
         <User>
-          <UserAvatar src={profile.avatar.url} alt="Avatar" />
+          <UserAvatar
+            src={
+              profile.avatar
+                ? profile.avatar.url
+                : 'http://localhost:3333/static/avatars/default.png'
+            }
+            alt="Avatar"
+          />
 
           <UserName>
             {profile.first_name} {profile.last_name}
