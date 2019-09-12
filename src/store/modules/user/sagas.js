@@ -7,13 +7,14 @@ import api from '~/services/api';
 
 export function* updateProfile({ payload }) {
   const { first_name, last_name, email, phone, ...rest } = payload.data;
+  const { setOldPassword, setPassword, setConfirmPassword } = payload.functions;
 
   const data = {
     first_name,
     last_name,
     email,
     phone: phone || null,
-    ...(rest.oldPassword ? rest : {}),
+    ...(rest.oldPassword || rest.password ? rest : {}),
   };
 
   try {
@@ -22,6 +23,9 @@ export function* updateProfile({ payload }) {
     yield put(updateProfileSuccess(response.data));
 
     toast.success('Perfil atualizdo com sucesso!');
+    setOldPassword('');
+    setPassword('');
+    setConfirmPassword('');
   } catch (err) {
     switch (err.response.data.error) {
       case 'User not found.': {
@@ -46,6 +50,7 @@ export function* updateProfile({ payload }) {
       }
       case 'Your old password do not match.': {
         toast.error('Sua senha atual está incorreta.');
+        setOldPassword('');
         break;
       }
       default: {

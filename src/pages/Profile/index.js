@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { updateProfileRequest } from '~/store/modules/user/actions';
 
 import phoneMask from '~/util/inputMasks/phoneNumberMask';
+import updateProfileSchema from '~/validators/profileUpdateValidator';
 
 import {
   Container,
@@ -31,21 +32,28 @@ export default function Profile() {
 
   function handleSubmit() {
     dispatch(
-      updateProfileRequest({
-        first_name: firstName,
-        last_name: lastName,
-        email,
-        phone,
-        oldPassword,
-        password,
-        confirmPassword,
-      })
+      updateProfileRequest(
+        {
+          first_name: firstName,
+          last_name: lastName,
+          email,
+          phone,
+          oldPassword,
+          password,
+          confirmPassword,
+        },
+        {
+          setOldPassword,
+          setPassword,
+          setConfirmPassword,
+        }
+      )
     );
   }
 
   return (
     <Container>
-      <ProfileForm onSubmit={handleSubmit}>
+      <ProfileForm onSubmit={handleSubmit} schema={updateProfileSchema}>
         <Input
           name="first_name"
           placeholder="Digite seu nome"
