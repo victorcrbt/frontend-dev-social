@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import { MdCameraAlt } from 'react-icons/md';
 
-import { Container, Preview, Input } from './styles';
+import { Container, Preview, Input, Overflow } from './styles';
 
 export default function AvatarInput({ style, setFile, defaultPreview }) {
   const [preview, setPreview] = useState(
@@ -25,10 +26,16 @@ export default function AvatarInput({ style, setFile, defaultPreview }) {
 
   return (
     <>
-      <Container htmlFor="file">
-        <div style={style}>
-          {preview && <Preview src={preview} alt="Preview" />}
-        </div>
+      <Container style={style} htmlFor="file">
+        <div>{preview && <Preview src={preview} alt="Preview" />}</div>
+
+        <Overflow className="overflow">
+          <MdCameraAlt size={30} color="rgba(0, 0, 0, 0.5)" />
+
+          <div>
+            <span>ALTERAR FOTO</span>
+          </div>
+        </Overflow>
         <Input id="file" type="file" onChange={handleImageChange} />
       </Container>
     </>

@@ -58,7 +58,7 @@ export default function Profile() {
     <Container>
       <ProfileForm onSubmit={handleSubmit} schema={updateProfileSchema}>
         <ImageInput
-          style={{ margin: '0 auto 20px auto' }}
+          style={{ justifyContent: 'center', marginBottom: 20 }}
           setFile={setFile}
           defaultPreview={profile.avatar ? profile.avatar.url : null}
         />
