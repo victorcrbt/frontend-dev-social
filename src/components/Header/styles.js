@@ -1,5 +1,5 @@
 import styled, { keyframes } from 'styled-components';
-import { darken } from 'polished';
+import { darken, lighten } from 'polished';
 
 import Form from '~/components/Form';
 import TextInput from '~/components/TextInput';
@@ -46,6 +46,7 @@ export const Logo = styled.img`
 
 export const Right = styled.div`
   width: 100%;
+  height: 100%;
   display: flex;
   justify-content: space-between;
 `;
@@ -176,6 +177,15 @@ export const Submenu = styled.div`
   overflow: hidden;
   z-index: 100;
 
+  &:last-child {
+    border-bottom: 1px solid #272727;
+  }
+
+  @media screen and (max-width: 425px) {
+    top: 52px;
+    right: 2px;
+  }
+
   a,
   button {
     width: 100%;
@@ -183,12 +193,13 @@ export const Submenu = styled.div`
     padding: 10px;
     color: #fafafa;
     font-weight: bold;
-    background: rgba(0, 0, 0, 0.4);
+    background: #181818;
     border: 0;
+    border-top: 1px solid #272727;
     text-align: left;
 
     &:hover {
-      background: rgba(0, 0, 0, 0.2);
+      background: ${lighten(0.01, '#181818')};
     }
   }
 `;
