@@ -33,6 +33,8 @@ module.exports = {
     'no-console': ['error', { allow: ['tron'] }],
     'react-hooks/rules-of-hooks': 'off',
     'react-hooks/exhaustive-deps': 'warn',
+    'consistent-return': 'off',
+    'no-return-assign': 'off',
   },
   settings: {
     'import/resolver': {

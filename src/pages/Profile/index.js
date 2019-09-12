@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { updateProfileRequest } from '~/store/modules/user/actions';
 
 import phoneMask from '~/util/inputMasks/phoneNumberMask';
 import updateProfileSchema from '~/validators/profileUpdateValidator';
-
-import AvatarInput from '~/components/AvatarInput';
 
 import {
   Container,

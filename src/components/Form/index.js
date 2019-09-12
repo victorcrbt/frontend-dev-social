@@ -21,7 +21,7 @@ export default function Form({ children, schema, onSubmit, ...rest }) {
         if (!child.props) return;
         if (child.props.type === 'submit') return;
 
-        fieldsData[child.props.name] = child.props.value;
+        return (fieldsData[child.props.name] = child.props.value);
       });
 
       setFields(fieldsData);
