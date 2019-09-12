@@ -15,6 +15,7 @@ import {
   Container,
   Content,
   Logo,
+  Right,
   SearchForm,
   SearchInput,
   ResultList,
@@ -57,66 +58,68 @@ export default function Header() {
       <Content>
         <Logo src={logo} alt="DevSocial" />
 
-        <SearchForm>
-          <SearchInput
-            autoComplete="off"
-            placeholder="Digite o nome do usuário..."
-            name="search"
-            value={user}
-            onChange={e => setUser(e.target.value)}
-            onBlur={() => setTimeout(() => setSearchResults([]), 500)}
-            icon={<MdSearch size={20} color="#999" />}
-          />
+        <Right>
+          <SearchForm>
+            <SearchInput
+              autoComplete="off"
+              placeholder="Digite o nome do usuário..."
+              name="search"
+              value={user}
+              onChange={e => setUser(e.target.value)}
+              onBlur={() => setTimeout(() => setSearchResults([]), 500)}
+              icon={<MdSearch size={20} color="#999" />}
+            />
 
-          {searchResults.length > 0 && (
-            <ResultList>
-              {searchResults.map(result => (
-                <ResultItem
-                  key={result.id}
-                  onClick={() => history.push(`/usuario/${result.id}`)}
-                >
-                  <ResultImage
-                    src={
-                      result.avatar
-                        ? result.avatar.url
-                        : 'http://localhost:3333/static/avatars/default.png'
-                    }
-                    alt="User avatar"
-                  />
-                  {result.first_name}
-                  {` `}
-                  {result.last_name}
-                </ResultItem>
-              ))}
-            </ResultList>
-          )}
+            {searchResults.length > 0 && (
+              <ResultList>
+                {searchResults.map(result => (
+                  <ResultItem
+                    key={result.id}
+                    onClick={() => history.push(`/usuario/${result.id}`)}
+                  >
+                    <ResultImage
+                      src={
+                        result.avatar
+                          ? result.avatar.url
+                          : 'http://localhost:3333/static/avatars/default.png'
+                      }
+                      alt="User avatar"
+                    />
+                    {result.first_name}
+                    {` `}
+                    {result.last_name}
+                  </ResultItem>
+                ))}
+              </ResultList>
+            )}
 
-          <button type="submit">Pesquisar</button>
-        </SearchForm>
+            <button type="submit">Pesquisar</button>
+          </SearchForm>
 
-        <User>
-          <UserAvatar
-            src={
-              profile.avatar
-                ? profile.avatar.url
-                : 'http://localhost:3333/static/avatars/default.png'
-            }
-            alt="Avatar"
-          />
+          <User>
+            <UserAvatar
+              src={
+                profile.avatar
+                  ? profile.avatar.url
+                  : 'http://localhost:3333/static/avatars/default.png'
+              }
+              alt="Avatar"
+            />
 
-          <UserName>
-            {profile.first_name} {profile.last_name}
-          </UserName>
+            <UserName>
+              {profile.first_name} {profile.last_name}
+            </UserName>
 
-          <Triangle className="triangle" />
+            <Triangle className="triangle" />
 
-          <Submenu className="submenu">
-            <Link to="/perfil">Perfil</Link>
-            <button type="button" onClick={() => dispatch(signOut())}>
-              Sair
-            </button>
-          </Submenu>
-        </User>
+            <Submenu className="submenu">
+              <Link to="/perfil">Perfil</Link>
+              <button type="button" onClick={() => dispatch(signOut())}>
+                Sair
+              </button>
+            </Submenu>
+          </User>
+        </Right>
       </Content>
     </Container>
   );

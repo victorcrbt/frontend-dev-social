@@ -2,6 +2,8 @@ import styled from 'styled-components';
 
 export const Container = styled.label`
   position: relative;
+  max-width: 150px;
+  margin: 0 auto;
 
   display: flex;
 

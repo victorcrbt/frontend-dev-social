@@ -19,6 +19,11 @@ export const Container = styled.div`
   margin-bottom: 20px;
 
   background: rgba(0, 0, 0, 0.4);
+
+  @media screen and (max-width: 425px) {
+    height: auto;
+    padding: 10px 0;
+  }
 `;
 
 export const Content = styled.div`
@@ -29,10 +34,20 @@ export const Content = styled.div`
 
   display: flex;
   align-items: center;
+
+  @media screen and (max-width: 425px) {
+    flex-direction: column;
+  }
 `;
 
 export const Logo = styled.img`
   width: 200px;
+`;
+
+export const Right = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
 `;
 
 export const SearchForm = styled(Form)`
@@ -63,6 +78,7 @@ export const ResultList = styled.ul`
   margin: 0;
   margin-left: -20px;
   max-height: 200px;
+  z-index: 99;
 
   border-radius: 5px;
   list-style: none;
@@ -134,6 +150,10 @@ export const UserAvatar = styled.img`
 export const UserName = styled.div`
   color: #fafafa;
   font-weight: bold;
+
+  @media screen and (max-width: 700px) {
+    display: none;
+  }
 `;
 
 export const Triangle = styled.div`
@@ -154,6 +174,7 @@ export const Submenu = styled.div`
   padding: 0;
   top: 50px;
   overflow: hidden;
+  z-index: 100;
 
   a,
   button {
