@@ -7,7 +7,12 @@ import api from '~/services/api';
 
 export function* updateProfile({ payload }) {
   const { first_name, last_name, file, email, phone, ...rest } = payload.data;
-  const { setOldPassword, setPassword, setConfirmPassword } = payload.functions;
+  const {
+    setOldPassword,
+    setPassword,
+    setConfirmPassword,
+    setFile,
+  } = payload.functions;
 
   const data = {
     first_name,
@@ -21,6 +26,7 @@ export function* updateProfile({ payload }) {
     const response = yield call(api.post, '/avatars', file);
 
     data.avatar_id = response.data.file.id;
+    setFile('');
   }
 
   try {

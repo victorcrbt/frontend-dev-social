@@ -49,6 +49,7 @@ export default function Profile() {
           setOldPassword,
           setPassword,
           setConfirmPassword,
+          setFile,
         }
       )
     );
