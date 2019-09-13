@@ -30,43 +30,13 @@ export const PostInfo = styled.div`
   }
 `;
 
-export const UserAvatar = styled.img`
-  width: 40px;
-  height: 40px;
-  border-radius: 20px;
-
-  background: rgba(0, 0, 0, 0.2);
-`;
-
-export const UserName = styled.h3`
-  padding: 0;
-  margin: 0;
-
-  color: #7e0eb1;
-`;
-
-export const PostDate = styled.span`
-  padding: 0;
-  margin: 0;
-
-  font-size: 12px;
-  color: #999;
-  font-weight: bold;
-`;
-
-export const Controls = styled.div``;
-
-export const ControlButton = styled.button`
-  margin-left: 5px;
-
-  border: 0;
-  background: transparent;
-`;
-
 export const PostContent = styled.div``;
 
 export const Content = styled(TextArea)`
   padding: 10px;
+
+  color: #444;
 `;
 
 export const SaveButton = styled(Button)``;
+

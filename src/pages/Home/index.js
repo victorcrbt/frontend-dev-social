@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import * as yup from 'yup';
 
@@ -13,27 +13,32 @@ const schema = yup.object().shape({
   post: yup.string().required('Você não pode salvar um post em branco.'),
 });
 
-const content1 =
-  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi semper, sapien vel blandit tempus, est erat consequat augue, at bibendum erat purus id ligula. Fusce interdum venenatis tristique. Praesent eget porta quam. Praesent in est quis tellus gravida facilisis. Vivamus rutrum nunc turpis, in tempus justo ultricies id. Sed commodo lacus a nisi faucibus, vitae tincidunt orci porttitor. Donec nec tortor non mauris suscipit tincidunt ut a nunc. Duis posuere laoreet massa iaculis semper. Mauris gravida tempus neque id elementum. Praesent arcu sapien, ornare ut massa vel, vulputate malesuada magna.';
-
-const content2 =
-  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi semper, sapien vel blandit tempus, est erat consequat augue, at bibendum erat purus id ligula. Fusce interdum venenatis tristique. Praesent eget porta quam. Praesent in est quis tellus gravida facilisis. Vivamus rutrum nunc turpis, in tempus justo ultricies id. Sed commodo lacus a nisi faucibus, vitae tincidunt orci porttitor. Donec nec tortor non mauris suscipit tincidunt ut a nunc. Duis posuere laoreet massa iaculis semper. Mauris gravida tempus neque id elementum. Praesent arcu sapien, ornare ut massa vel, vulputate malesuada magna.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi semper, sapien vel blandit tempus, est erat consequat augue, at bibendum erat purus id ligula. Fusce interdum venenatis tristique. Praesent eget porta quam. Praesent in est quis tellus gravida facilisis. Vivamus rutrum nunc turpis, in tempus justo ultricies id. Sed commodo lacus a nisi faucibus, vitae tincidunt orci porttitor. Donec nec tortor non mauris suscipit tincidunt ut a nunc. Duis posuere laoreet massa iaculis semper. Mauris gravida tempus neque id elementum. Praesent arcu sapien, ornare ut massa vel, vulputate malesuada magna.';
-
-const content3 =
-  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi semper, sapien vel blandit tempus, est erat consequat augue, at bibendum erat purus id ligula. Fusce interdum venenatis tristique. Praesent eget porta quam. Praesent in est quis tellus gravida facilisis. Vivamus rutrum nunc turpis, in tempus justo ultricies id. Sed commodo lacus a nisi faucibus, vitae tincidunt orci porttitor. Donec nec tortor non mauris suscipit tincidunt ut a nunc. Duis posuere laoreet massa iaculis semper. Mauris gravida tempus neque id elementum. Praesent arcu sapien, ornare ut massa vel, vulputate malesuada magna.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi semper, sapien vel blandit tempus, est erat consequat augue, at bibendum erat purus id ligula. Fusce interdum venenatis tristique. Praesent eget porta quam. Praesent in est quis tellus gravida facilisis. Vivamus rutrum nunc turpis, in tempus justo ultricies id. Sed commodo lacus a nisi faucibus, vitae tincidunt orci porttitor. Donec nec tortor non mauris suscipit tincidunt ut a nunc. Duis posuere laoreet massa iaculis semper. Mauris gravida tempus neque id elementum. Praesent arcu sapien, ornare ut massa vel, vulputate malesuada magna.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi semper, sapien vel blandit tempus, est erat consequat augue, at bibendum erat purus id ligula. Fusce interdum venenatis tristique. Praesent eget porta quam. Praesent in est quis tellus gravida facilisis. Vivamus rutrum nunc turpis, in tempus justo ultricies id. Sed commodo lacus a nisi faucibus, vitae tincidunt orci porttitor. Donec nec tortor non mauris suscipit tincidunt ut a nunc. Duis posuere laoreet massa iaculis semper. Mauris gravida tempus neque id elementum. Praesent arcu sapien, ornare ut massa vel, vulputate malesuada magna.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi semper, sapien vel blandit tempus, est erat consequat augue, at bibendum erat purus id ligula. Fusce interdum venenatis tristique. Praesent eget porta quam. Praesent in est quis tellus gravida facilisis. Vivamus rutrum nunc turpis, in tempus justo ultricies id. Sed commodo lacus a nisi faucibus, vitae tincidunt orci porttitor. Donec nec tortor non mauris suscipit tincidunt ut a nunc. Duis posuere laoreet massa iaculis semper. Mauris gravida tempus neque id elementum. Praesent arcu sapien, ornare ut massa vel, vulputate malesuada magna.';
-
 export default function Home() {
   const [content, setContent] = useState('');
   const [posting, setPosting] = useState(false);
-  const [posts, setPosts] = useState([
-    { content: content1 },
-    { content: content2 },
-    { content: content3 },
-  ]);
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    async function loadPosts() {
+      try {
+        const response = await api.get('/posts');
+
+        console.tron.log(response.data);
+
+        setPosts(response.data);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
+    loadPosts();
+  }, []);
 
   async function handleSubmit() {
     try {
       const response = await api.post('/posts', { content });
+
+      console.tron.log(response.data);
 
       setContent('');
       setPosting(false);
@@ -65,6 +70,10 @@ export default function Home() {
     setPosting(false);
   }
 
+  useEffect(() => {
+    console.log(posts)
+  }, [posts])
+
   return (
     <Container>
       <PostForm
@@ -78,7 +87,7 @@ export default function Home() {
       />
 
       {posts.map(post => (
-        <Posts postInfo={post} key={post.content} />
+        <Posts postInfo={post} key={post.id} handleDelete={handleDelete} />
       ))}
     </Container>
   );
