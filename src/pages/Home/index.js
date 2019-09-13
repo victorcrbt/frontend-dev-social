@@ -44,6 +44,22 @@ export default function Home() {
     }
   }
 
+  async function handleDelete(id) {
+    try {
+      await api.delete(`/posts/${id}`);
+
+      const postIndex = posts.findIndex(post => post.id === id);
+
+      const postsWithoutDeleted = posts;
+      postsWithoutDeleted.splice(postIndex, 1);
+
+      setPosts([...postsWithoutDeleted]);
+      toast.success('Post excluído com sucesso!');
+    } catch (err) {
+      toast.error(err.response.data.error);
+    }
+  }
+
   function handleCancel() {
     setContent('');
     setPosting(false);
