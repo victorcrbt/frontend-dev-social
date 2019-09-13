@@ -4,22 +4,32 @@ import * as yup from 'yup';
 
 import api from '~/services/api';
 
-import {
-  Container,
-  NewPost,
-  Input,
-  SubmitButton,
-  CancelButton,
-} from './styles';
+import PostForm from './PostForm';
+import Posts from './Posts';
+
+import { Container } from './styles';
 
 const schema = yup.object().shape({
   post: yup.string().required('Você não pode salvar um post em branco.'),
 });
 
+const content1 =
+  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi semper, sapien vel blandit tempus, est erat consequat augue, at bibendum erat purus id ligula. Fusce interdum venenatis tristique. Praesent eget porta quam. Praesent in est quis tellus gravida facilisis. Vivamus rutrum nunc turpis, in tempus justo ultricies id. Sed commodo lacus a nisi faucibus, vitae tincidunt orci porttitor. Donec nec tortor non mauris suscipit tincidunt ut a nunc. Duis posuere laoreet massa iaculis semper. Mauris gravida tempus neque id elementum. Praesent arcu sapien, ornare ut massa vel, vulputate malesuada magna.';
+
+const content2 =
+  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi semper, sapien vel blandit tempus, est erat consequat augue, at bibendum erat purus id ligula. Fusce interdum venenatis tristique. Praesent eget porta quam. Praesent in est quis tellus gravida facilisis. Vivamus rutrum nunc turpis, in tempus justo ultricies id. Sed commodo lacus a nisi faucibus, vitae tincidunt orci porttitor. Donec nec tortor non mauris suscipit tincidunt ut a nunc. Duis posuere laoreet massa iaculis semper. Mauris gravida tempus neque id elementum. Praesent arcu sapien, ornare ut massa vel, vulputate malesuada magna.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi semper, sapien vel blandit tempus, est erat consequat augue, at bibendum erat purus id ligula. Fusce interdum venenatis tristique. Praesent eget porta quam. Praesent in est quis tellus gravida facilisis. Vivamus rutrum nunc turpis, in tempus justo ultricies id. Sed commodo lacus a nisi faucibus, vitae tincidunt orci porttitor. Donec nec tortor non mauris suscipit tincidunt ut a nunc. Duis posuere laoreet massa iaculis semper. Mauris gravida tempus neque id elementum. Praesent arcu sapien, ornare ut massa vel, vulputate malesuada magna.';
+
+const content3 =
+  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi semper, sapien vel blandit tempus, est erat consequat augue, at bibendum erat purus id ligula. Fusce interdum venenatis tristique. Praesent eget porta quam. Praesent in est quis tellus gravida facilisis. Vivamus rutrum nunc turpis, in tempus justo ultricies id. Sed commodo lacus a nisi faucibus, vitae tincidunt orci porttitor. Donec nec tortor non mauris suscipit tincidunt ut a nunc. Duis posuere laoreet massa iaculis semper. Mauris gravida tempus neque id elementum. Praesent arcu sapien, ornare ut massa vel, vulputate malesuada magna.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi semper, sapien vel blandit tempus, est erat consequat augue, at bibendum erat purus id ligula. Fusce interdum venenatis tristique. Praesent eget porta quam. Praesent in est quis tellus gravida facilisis. Vivamus rutrum nunc turpis, in tempus justo ultricies id. Sed commodo lacus a nisi faucibus, vitae tincidunt orci porttitor. Donec nec tortor non mauris suscipit tincidunt ut a nunc. Duis posuere laoreet massa iaculis semper. Mauris gravida tempus neque id elementum. Praesent arcu sapien, ornare ut massa vel, vulputate malesuada magna.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi semper, sapien vel blandit tempus, est erat consequat augue, at bibendum erat purus id ligula. Fusce interdum venenatis tristique. Praesent eget porta quam. Praesent in est quis tellus gravida facilisis. Vivamus rutrum nunc turpis, in tempus justo ultricies id. Sed commodo lacus a nisi faucibus, vitae tincidunt orci porttitor. Donec nec tortor non mauris suscipit tincidunt ut a nunc. Duis posuere laoreet massa iaculis semper. Mauris gravida tempus neque id elementum. Praesent arcu sapien, ornare ut massa vel, vulputate malesuada magna.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi semper, sapien vel blandit tempus, est erat consequat augue, at bibendum erat purus id ligula. Fusce interdum venenatis tristique. Praesent eget porta quam. Praesent in est quis tellus gravida facilisis. Vivamus rutrum nunc turpis, in tempus justo ultricies id. Sed commodo lacus a nisi faucibus, vitae tincidunt orci porttitor. Donec nec tortor non mauris suscipit tincidunt ut a nunc. Duis posuere laoreet massa iaculis semper. Mauris gravida tempus neque id elementum. Praesent arcu sapien, ornare ut massa vel, vulputate malesuada magna.';
+
 export default function Home() {
   const [content, setContent] = useState('');
   const [posting, setPosting] = useState(false);
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState([
+    { content: content1 },
+    { content: content2 },
+    { content: content3 },
+  ]);
 
   async function handleSubmit() {
     try {
@@ -41,29 +51,18 @@ export default function Home() {
 
   return (
     <Container>
-      <NewPost onSubmit={handleSubmit} schema={schema}>
-        <Input
-          name="post"
-          placeholder="Conte algo aos seus amigos..."
-          value={content}
-          onChange={e => setContent(e.target.value)}
-          posting={posting}
-          onFocus={() => setPosting(true)}
-          onBlur={() => setTimeout(() => !content && setPosting(false), 500)}
-        />
-
-        {posting && (
-          <>
-            <SubmitButton type="submit">Publicar</SubmitButton>
-            <CancelButton type="button" onClick={handleCancel}>
-              Cancelar
-            </CancelButton>
-          </>
-        )}
-      </NewPost>
+      <PostForm
+        handleSubmit={handleSubmit}
+        schema={schema}
+        content={content}
+        setContent={setContent}
+        posting={posting}
+        setPosting={setPosting}
+        handleCancel={handleCancel}
+      />
 
       {posts.map(post => (
-        <div>{post.content}</div>
+        <Posts postInfo={post} key={post.content} />
       ))}
     </Container>
   );

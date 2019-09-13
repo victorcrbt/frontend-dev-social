@@ -5,19 +5,11 @@ export const Container = styled.div`
   width: 100%;
   margin: 6px 0;
 
-  ${props =>
-    props.disabled &&
-    css`
-      background: ${darken(0.15, '#fafafa')}
-      cursor: not-allowed;
-    `}
-
   span {
     color: #ff4040;
     font-weight: bold;
     opacity: 0;
     transition: opacity 0.4s ease;
-
     ${props =>
       props.error &&
       css`
@@ -30,7 +22,6 @@ export const InputWrapper = styled.div`
   width: 100%;
   height: 100%;
   position: relative;
-
   display: flex;
   align-items: center;
 
@@ -42,7 +33,6 @@ export const InputWrapper = styled.div`
     background: #fafafa;
     height: 100%;
     padding-left: 5px;
-
     display: flex;
     align-items: center;
     border-top-left-radius: 5px;
@@ -55,7 +45,6 @@ export const Input = styled.textarea`
   height: 50px;
   margin-bottom: 4px;
   padding: 0 10px;
-
   resize: none;
   color: #999999;
   background: #fafafa;
@@ -72,9 +61,5 @@ export const Input = styled.textarea`
 
   &::placeholder {
     color: #999999;
-  }
-
-  &:disabled {
-    cursor: not-allowed;
   }
 `;
