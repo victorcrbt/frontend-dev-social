@@ -1,16 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import * as yup from 'yup';
 
 import api from '~/services/api';
 
-import {
-  Container,
-  NewPost,
-  Input,
-  SubmitButton,
-  CancelButton,
-} from './styles';
+import PostForm from './PostForm';
+import Posts from './Posts';
+
+import { Container } from './styles';
 
 const schema = yup.object().shape({
   post: yup.string().required('Você não pode salvar um post em branco.'),
@@ -21,9 +18,27 @@ export default function Home() {
   const [posting, setPosting] = useState(false);
   const [posts, setPosts] = useState([]);
 
+  useEffect(() => {
+    async function loadPosts() {
+      try {
+        const response = await api.get('/posts');
+
+        console.tron.log(response.data);
+
+        setPosts(response.data);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
+    loadPosts();
+  }, []);
+
   async function handleSubmit() {
     try {
       const response = await api.post('/posts', { content });
+
+      console.tron.log(response.data);
 
       setContent('');
       setPosting(false);
@@ -34,36 +49,45 @@ export default function Home() {
     }
   }
 
+  async function handleDelete(id) {
+    try {
+      await api.delete(`/posts/${id}`);
+
+      const postIndex = posts.findIndex(post => post.id === id);
+
+      const postsWithoutDeleted = posts;
+      postsWithoutDeleted.splice(postIndex, 1);
+
+      setPosts([...postsWithoutDeleted]);
+      toast.success('Post excluído com sucesso!');
+    } catch (err) {
+      toast.error(err.response.data.error);
+    }
+  }
+
   function handleCancel() {
     setContent('');
     setPosting(false);
   }
 
+  useEffect(() => {
+    console.log(posts)
+  }, [posts])
+
   return (
     <Container>
-      <NewPost onSubmit={handleSubmit} schema={schema}>
-        <Input
-          name="post"
-          placeholder="Conte algo aos seus amigos..."
-          value={content}
-          onChange={e => setContent(e.target.value)}
-          posting={posting}
-          onFocus={() => setPosting(true)}
-          onBlur={() => setTimeout(() => !content && setPosting(false), 500)}
-        />
-
-        {posting && (
-          <>
-            <SubmitButton type="submit">Publicar</SubmitButton>
-            <CancelButton type="button" onClick={handleCancel}>
-              Cancelar
-            </CancelButton>
-          </>
-        )}
-      </NewPost>
+      <PostForm
+        handleSubmit={handleSubmit}
+        schema={schema}
+        content={content}
+        setContent={setContent}
+        posting={posting}
+        setPosting={setPosting}
+        handleCancel={handleCancel}
+      />
 
       {posts.map(post => (
-        <div>{post.content}</div>
+        <Posts postInfo={post} key={post.id} handleDelete={handleDelete} />
       ))}
     </Container>
   );
