@@ -13,11 +13,24 @@ import {
   ControlButton,
 } from './styles';
 
-export default function PostHeader({ post, user, profile, setEditing, handleDelete }) {
+export default function PostHeader({
+  post,
+  user,
+  profile,
+  setEditing,
+  handleDelete,
+}) {
   return (
     <Container>
       <PostInfo>
-        <UserAvatar src="http://google.com/google.jpg" alt="User avatar" />
+        <UserAvatar
+          src={
+            user.avatar
+              ? user.avatar.url
+              : 'http://localhost:3333/static/avatars/default.png'
+          }
+          alt="User avatar"
+        />
         <div>
           <UserName>
             {user.first_name} {user.last_name}

@@ -4,22 +4,34 @@ import { Container, Likes, Comments } from './styles';
 
 export default function PostInteractions({ likes, comments }) {
   const [isEmpty, setIsEmpty] = useState(true);
+  const [likesList, setLikesList] = useState([]);
+  const [commentsList, setCommentsList] = useState([]);
 
   useEffect(() => {
-    if (likes.length > 0 || comments.length > 0) return setIsEmpty(false);
+    if (likesList.length > 0 || commentsList.length > 0)
+      return setIsEmpty(false);
+  }, [likesList, commentsList]);
+
+  useEffect(() => {
+    setLikesList(likes);
+    setCommentsList(comments);
   }, [likes, comments]);
 
   return (
     <Container isEmpty={isEmpty}>
-      {likes && likes.length !== 0 && (
+      {likesList && likesList.length !== 0 && (
         <Likes>
-          {likes.length === 1 ? `1 curtida` : `${likes.length} curtidas`}
+          {likesList.length === 1
+            ? `1 curtida`
+            : `${likesList.length} curtidas`}
         </Likes>
       )}
 
-      {comments && comments.length !== 0 && (
+      {commentsList && commentsList.length !== 0 && (
         <Comments>
-          {comments.length === 1 ? `1 comentario` : `${comments.length} comentarios`}
+          {commentsList.length === 1
+            ? `1 comentario`
+            : `${commentsList.length} comentarios`}
         </Comments>
       )}
     </Container>

@@ -1,29 +1,28 @@
 import React from 'react';
 
-import { NewPost, Input, SubmitButton, CancelButton } from './styles';
+import { Container, Input, SubmitButton, CancelButton } from './styles';
 
-export default function CommentForm({
+export default function PostForm({
   handleSubmit,
-  schema,
   content,
   setContent,
-  posting,
-  setPosting,
+  commenting,
+  setCommenting,
   handleCancel,
 }) {
   return (
-    <NewPost onSubmit={handleSubmit} schema={schema}>
+    <Container onSubmit={handleSubmit}>
       <Input
-        name="post"
+        name="comment"
         placeholder="Conte algo aos seus amigos..."
         value={content}
         onChange={e => setContent(e.target.value)}
-        posting={posting}
-        onFocus={() => setPosting(true)}
-        onBlur={() => setTimeout(() => !content && setPosting(false), 500)}
+        commenting={commenting}
+        onFocus={() => setCommenting(true)}
+        onBlur={() => setTimeout(() => !content && setCommenting(false), 500)}
       />
 
-      {posting && (
+      {commenting && (
         <>
           <SubmitButton type="submit">Publicar</SubmitButton>
           <CancelButton type="button" onClick={handleCancel}>
@@ -31,6 +30,6 @@ export default function CommentForm({
           </CancelButton>
         </>
       )}
-    </NewPost>
+    </Container>
   );
 }
