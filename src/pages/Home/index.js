@@ -5,7 +5,7 @@ import * as yup from 'yup';
 import api from '~/services/api';
 
 import PostForm from './PostForm';
-import Posts from './Posts';
+import Post from './Post';
 
 import { Container } from './styles';
 
@@ -79,7 +79,7 @@ export default function Home() {
       />
 
       {posts.map(post => (
-        <Posts post={post} key={post.id} handleDelete={handleDelete} />
+        <Post post={post} key={post.id} handleDelete={handleDelete} />
       ))}
     </Container>
   );
