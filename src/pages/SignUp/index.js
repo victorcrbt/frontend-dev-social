@@ -24,6 +24,8 @@ export default function SignIn() {
   const [confirmPassword, setConfirmPassword] = useState('');
 
   async function handleSubmit(e) {
+    if (phone === '') setPhone(null);
+
     dispatch(signUpRequest(firstName, lastName, email, password, phone));
   }
 
