@@ -23,11 +23,9 @@ export default function Home() {
       try {
         const response = await api.get('/posts');
 
-        console.tron.log(response.data);
-
         setPosts(response.data);
       } catch (err) {
-        console.log(err);
+        toast.error(err.message);
       }
     }
 
@@ -37,8 +35,6 @@ export default function Home() {
   async function handleSubmit() {
     try {
       const response = await api.post('/posts', { content });
-
-      console.tron.log(response.data);
 
       setContent('');
       setPosting(false);
@@ -70,10 +66,6 @@ export default function Home() {
     setPosting(false);
   }
 
-  useEffect(() => {
-    console.log(posts)
-  }, [posts])
-
   return (
     <Container>
       <PostForm
@@ -87,7 +79,7 @@ export default function Home() {
       />
 
       {posts.map(post => (
-        <Posts postInfo={post} key={post.id} handleDelete={handleDelete} />
+        <Posts post={post} key={post.id} handleDelete={handleDelete} />
       ))}
     </Container>
   );

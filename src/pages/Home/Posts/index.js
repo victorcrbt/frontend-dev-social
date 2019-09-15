@@ -11,7 +11,7 @@ import CommentForm from '../CommentForm';
 
 import { Container, PostContent, Content, SaveButton } from './styles';
 
-export default function Posts({ postInfo: post, handleDelete }) {
+export default function Post({ post, handleDelete }) {
   const profile = useSelector(state => state.user.profile);
 
   const [editing, setEditing] = useState(false);
@@ -99,7 +99,6 @@ export default function Posts({ postInfo: post, handleDelete }) {
         handleDelete={handleDelete}
         handlePostEdit={handlePostEdit}
       />
-
       <PostContent>
         <Content
           id={post.id}
@@ -115,16 +114,20 @@ export default function Posts({ postInfo: post, handleDelete }) {
         )}
       </PostContent>
 
-      <PostInteractions likes={post.likes} comments={comments} />
+      <PostInteractions
+        likes={post.likes}
+        comments={comments}
+        postId={post.id}
+      />
 
       {comments.map(comment => (
         <Comment
+          className="comment"
           comment={comment}
           user={comment.user}
           handleCommentDelete={handleCommentDelte}
         />
       ))}
-
       <CommentForm
         handleSubmit={handleSubmitComment}
         content={commentValue}
