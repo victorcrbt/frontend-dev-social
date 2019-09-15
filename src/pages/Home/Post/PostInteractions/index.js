@@ -1,34 +1,32 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import { MdFavorite, MdFavoriteBorder } from 'react-icons/md';
 import { toast } from 'react-toastify';
+import PropTypes from 'prop-types';
 
 import api from '~/services/api';
 
 import { Container, Interactions, Likes, Comments, Actions } from './styles';
 
-export default function PostInteractions({ likes, comments, postId }) {
-  const profile = useSelector(state => state.user.profile);
-
+export default function PostInteractions({ likes, comments, postId, profile }) {
   const [isEmpty, setIsEmpty] = useState(false);
-  const [likesList, setLikesList] = useState([]);
-  const [commentsList, setCommentsList] = useState([]);
+  const [likesList, setLikesList] = useState(likes || []);
+  const [commentsList, setCommentsList] = useState(comments || []);
   const [liked, setLiked] = useState(false);
 
   useEffect(() => {
     if (likesList.length === 0 && commentsList.length === 0) {
       return setIsEmpty(true);
     }
+
     return setIsEmpty(false);
   }, [likesList, commentsList]);
 
   useEffect(() => {
-    setLikesList(likes);
     setCommentsList(comments);
-  }, [likes, comments]);
+  }, [comments]);
 
   useEffect(() => {
-    function loadLikes() {
+    function checkIfUserLiked() {
       const userAlreadyLiked = likes.findIndex(like => like === profile.id);
 
       if (userAlreadyLiked === -1) return;
@@ -36,7 +34,7 @@ export default function PostInteractions({ likes, comments, postId }) {
       return setLiked(true);
     }
 
-    loadLikes();
+    checkIfUserLiked();
   }, [likes, profile.id]);
 
   async function handleLike(post_id) {
@@ -111,3 +109,10 @@ export default function PostInteractions({ likes, comments, postId }) {
     </Container>
   );
 }
+
+PostInteractions.propTypes = {
+  likes: PropTypes.arrayOf(PropTypes.number).isRequired,
+  comments: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  postId: PropTypes.number.isRequired,
+  profile: PropTypes.shape().isRequired,
+};

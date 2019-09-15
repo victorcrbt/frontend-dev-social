@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
+import PropTypes from 'prop-types';
 
 import api from '~/services/api';
 
@@ -16,15 +17,17 @@ export default function Post({ post, handleDelete }) {
 
   const [editing, setEditing] = useState(false);
   const [value, setValue] = useState(post.content);
+
   const [comments, setComments] = useState([]);
-  const [commenting, setCommenting] = useState(false);
-  const [commentValue, setCommentValue] = useState('');
 
   useEffect(() => {
     setComments(post.comments);
   }, [post.comments]);
 
   useEffect(() => {
+    /**
+     * Used to adapt the textarea height to the preloaded post.
+     */
     function resizeTextArea() {
       const element = document.getElementById(post.id);
 
@@ -66,27 +69,8 @@ export default function Post({ post, handleDelete }) {
       setEditing(false);
       toast.success('Post editado com sucesso!');
     } catch (err) {
-      console.tron.log(err);
-    }
-  }
-
-  async function handleSubmitComment() {
-    try {
-      const response = await api.post(`/posts/${post.id}/comment`, {
-        content: commentValue,
-      });
-
-      setComments([...comments, response.data]);
-      setCommenting(false);
-      setCommentValue('');
-    } catch (err) {
       toast.error(err.message);
     }
-  }
-
-  function handleCancelComment() {
-    setCommentValue('');
-    setCommenting(false);
   }
 
   return (
@@ -99,6 +83,7 @@ export default function Post({ post, handleDelete }) {
         handleDelete={handleDelete}
         handlePostEdit={handlePostEdit}
       />
+
       <PostContent>
         <Content
           id={post.id}
@@ -118,24 +103,30 @@ export default function Post({ post, handleDelete }) {
         likes={post.likes}
         comments={comments}
         postId={post.id}
+        profile={profile}
       />
 
       {comments.map(comment => (
         <Comment
+          key={comment.id}
           className="comment"
           comment={comment}
           user={comment.user}
           handleCommentDelete={handleCommentDelte}
+          profile={profile}
         />
       ))}
+
       <CommentForm
-        handleSubmit={handleSubmitComment}
-        content={commentValue}
-        setContent={setCommentValue}
-        commenting={commenting}
-        setCommenting={setCommenting}
-        handleCancel={handleCancelComment}
+        postId={post.id}
+        comments={comments}
+        setComments={setComments}
       />
     </Container>
   );
 }
+
+Post.propTypes = {
+  post: PropTypes.shape().isRequired,
+  handleDelete: PropTypes.func.isRequired,
+};

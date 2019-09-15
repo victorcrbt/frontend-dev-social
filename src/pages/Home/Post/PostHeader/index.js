@@ -2,6 +2,7 @@ import React from 'react';
 import { formatRelative, parseISO } from 'date-fns';
 import pt from 'date-fns/locale/pt';
 import { MdModeEdit, MdClose } from 'react-icons/md';
+import PropTypes from 'prop-types';
 
 import {
   Container,
@@ -31,6 +32,7 @@ export default function PostHeader({
           }
           alt="User avatar"
         />
+
         <div>
           <UserName>
             {user.first_name} {user.last_name}
@@ -57,3 +59,11 @@ export default function PostHeader({
     </Container>
   );
 }
+
+PostHeader.propTypes = {
+  post: PropTypes.shape().isRequired,
+  user: PropTypes.shape().isRequired,
+  profile: PropTypes.shape().isRequired,
+  setEditing: PropTypes.func.isRequired,
+  handleDelete: PropTypes.func.isRequired,
+};

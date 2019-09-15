@@ -1,17 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { toast } from 'react-toastify';
+import PropTypes from 'prop-types';
+
+import api from '~/services/api';
 
 import { Container, Input, SubmitButton, CancelButton } from './styles';
 
-export default function PostForm({
-  handleSubmit,
-  content,
-  setContent,
-  commenting,
-  setCommenting,
-  handleCancel,
-}) {
+export default function PostForm({ postId, comments, setComments }) {
+  const [content, setContent] = useState('');
+  const [commenting, setCommenting] = useState(false);
+
+  async function handleSubmitComment() {
+    try {
+      const response = await api.post(`/posts/${postId}/comment`, {
+        content,
+      });
+
+      setComments([...comments, response.data]);
+      setCommenting(false);
+      setContent('');
+    } catch (err) {
+      toast.error(err.message);
+    }
+  }
+
+  function handleCancelComment() {
+    setContent('');
+    setCommenting(false);
+  }
+
   return (
-    <Container onSubmit={handleSubmit}>
+    <Container onSubmit={handleSubmitComment}>
       <Input
         name="comment"
         placeholder="Conte algo aos seus amigos..."
@@ -25,7 +44,7 @@ export default function PostForm({
       {commenting && (
         <>
           <SubmitButton type="submit">Publicar</SubmitButton>
-          <CancelButton type="button" onClick={handleCancel}>
+          <CancelButton type="button" onClick={handleCancelComment}>
             Cancelar
           </CancelButton>
         </>
@@ -33,3 +52,9 @@ export default function PostForm({
     </Container>
   );
 }
+
+PostForm.propTypes = {
+  postId: PropTypes.number.isRequired,
+  comments: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  setComments: PropTypes.func.isRequired,
+};
