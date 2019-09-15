@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import { formatRelative, parseISO } from 'date-fns';
 import pt from 'date-fns/locale/pt';
 import { MdModeEdit, MdClose } from 'react-icons/md';
 import { toast } from 'react-toastify';
+import PropTypes from 'prop-types';
 
 import api from '~/services/api';
 
@@ -21,13 +21,19 @@ import {
   SaveButton,
 } from './styles';
 
-export default function Comment({ comment, user, handleCommentDelete }) {
-  const profile = useSelector(state => state.user.profile);
-
+export default function Comment({
+  comment,
+  user,
+  handleCommentDelete,
+  profile,
+}) {
   const [editing, setEditing] = useState(false);
   const [value, setValue] = useState(comment.content);
 
   useEffect(() => {
+    /**
+     * Used to adapt the textarea height to the preloaded comment.
+     */
     function resizeCommentTextArea() {
       const element = document.getElementById(comment.id);
 
@@ -101,3 +107,10 @@ export default function Comment({ comment, user, handleCommentDelete }) {
     </Container>
   );
 }
+
+Comment.propTypes = {
+  comment: PropTypes.shape().isRequired,
+  user: PropTypes.shape().isRequired,
+  handleCommentDelete: PropTypes.func.isRequired,
+  profile: PropTypes.shape().isRequired,
+};
