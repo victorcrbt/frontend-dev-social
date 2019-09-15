@@ -8,5 +8,6 @@ export default function Button({ children, ...rest }) {
 }
 
 Button.propTypes = {
-  children: PropTypes.string.isRequired,
+  children: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf()])
+    .isRequired,
 };

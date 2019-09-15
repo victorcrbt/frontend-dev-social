@@ -9,6 +9,7 @@ import RecoveryPass from '~/pages/RecoveryPass';
 import ResetPassword from '~/pages/ResetPassword';
 import Home from '~/pages/Home';
 import Profile from '~/pages/Profile';
+import User from '~/pages/User';
 
 export default function Routes() {
   return (
@@ -20,6 +21,8 @@ export default function Routes() {
 
       <Route path="/inicio" component={Home} isPrivate />
       <Route path="/perfil" component={Profile} isPrivate />
+
+      <Route path="/usuario/:id" component={User} isPrivate />
     </Switch>
   );
 }
