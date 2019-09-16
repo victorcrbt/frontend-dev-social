@@ -90,9 +90,7 @@ export default function UserHeader({ user, setUser }) {
       <Left>
         <UserAvatar
           src={
-            user.avatar
-              ? user.avatar.url
-              : 'http://localhost:3333/static/avatars/default.png'
+            user.avatar ? user.avatar.url : process.env.REACT_APP_DEFAULT_AVATAR
           }
         />
 
