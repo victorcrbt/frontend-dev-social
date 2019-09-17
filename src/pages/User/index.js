@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { toast } from 'react-toastify';
 
 import api from '~/services/api';
 
@@ -15,11 +16,9 @@ export default function User({ match }) {
       try {
         const response = await api.get(`/users/${id}`);
 
-        console.tron.log(response.data);
-
         setUser(response.data);
       } catch (err) {
-        console.log(err);
+        toast.error(err.message);
       }
     }
 
