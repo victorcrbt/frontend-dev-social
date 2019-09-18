@@ -10,6 +10,7 @@ import ResetPassword from '~/pages/ResetPassword';
 import Home from '~/pages/Home';
 import Profile from '~/pages/Profile';
 import User from '~/pages/User';
+import Messages from '~/pages/Messages';
 
 export default function Routes() {
   return (
@@ -23,6 +24,8 @@ export default function Routes() {
       <Route path="/perfil" component={Profile} isPrivate />
 
       <Route path="/usuario/:id" component={User} isPrivate />
+
+      <Route path="/mensagens" component={Messages} isPrivate />
     </Switch>
   );
 }

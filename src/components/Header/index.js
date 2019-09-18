@@ -115,6 +115,7 @@ export default function Header() {
             <Submenu className="submenu">
               <Link to="/inicio">Inicio</Link>
               <Link to="/perfil">Perfil</Link>
+              <Link to="/mensagens">Mensagens</Link>
               <button type="button" onClick={() => dispatch(signOut())}>
                 Sair
               </button>
