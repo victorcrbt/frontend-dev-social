@@ -38,9 +38,17 @@ export default function Messages() {
       <Friends>
         {friends &&
           friends.map(friend => (
-            <Friend key={friend.id} onClick={() => setActiveChat(friend)}>
-              <FriendAvatar src={friend.avatar ? friend.avatar.url : process.env.REACT_APP_DEFAULT_AVATAR} />
-              <FriendName>{friend.first_name} {friend.last_name}</FriendName>
+            <Friend key={friend} onClick={() => setActiveChat(friend)}>
+              <FriendAvatar
+                src={
+                  friend.avatar
+                    ? friend.avatar.url
+                    : process.env.REACT_APP_DEFAULT_AVATAR
+                }
+              />
+              <FriendName>
+                {friend.first_name} {friend.last_name}
+              </FriendName>
             </Friend>
           ))}
       </Friends>
