@@ -37,7 +37,6 @@ export default function ActiveChat({ user }) {
     scrollChatToBottom();
   }, [messages]);
 
-  useEffect(() => {
   async function loadMessages() {
     try {
       const response = await api.get('/messages', {
@@ -46,11 +45,11 @@ export default function ActiveChat({ user }) {
         },
       });
 
-        setMessages(response.data);
-      } catch (err) {
-        toast.error(err.message);
-      }
+      setMessages(response.data);
+    } catch (err) {
+      toast.error(err.message);
     }
+  }
 
   useEffect(() => {
     loadMessages();
@@ -65,7 +64,7 @@ export default function ActiveChat({ user }) {
     const socket = io('http://localhost:3333/', {
       secure: true,
       rejectUnauthorized: false,
-      path: '/api/socket.io',
+      path: '/socket.io',
       query: {
         user_id: id,
       },
