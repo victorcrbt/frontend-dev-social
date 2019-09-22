@@ -72,7 +72,7 @@ export default function ActiveChat({ user }) {
     });
 
     socket.on('messageReceived', data => {
-      setMessages([...messages, data]);
+      if (data.sender_id === user.id) return setMessages([...messages, data]);
     });
 
     socket.on('messageSent', data => {
