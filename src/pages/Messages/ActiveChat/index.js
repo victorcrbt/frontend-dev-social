@@ -38,13 +38,13 @@ export default function ActiveChat({ user }) {
   }, [messages]);
 
   useEffect(() => {
-    async function loadMessages() {
-      try {
-        const response = await api.get('/messages', {
-          params: {
-            receiver_id: user.id,
-          },
-        });
+  async function loadMessages() {
+    try {
+      const response = await api.get('/messages', {
+        params: {
+          receiver_id: user.id,
+        },
+      });
 
         setMessages(response.data);
       } catch (err) {
@@ -52,11 +52,17 @@ export default function ActiveChat({ user }) {
       }
     }
 
+  useEffect(() => {
     loadMessages();
   }, []); // eslint-disable-line
 
   useEffect(() => {
-    const socket = io('https://windtech.dev/', {
+    setMessages([]);
+    loadMessages();
+  }, [user]); // eslint-disable-line
+
+  useEffect(() => {
+    const socket = io('http://localhost:3333/', {
       secure: true,
       rejectUnauthorized: false,
       path: '/api/socket.io',
