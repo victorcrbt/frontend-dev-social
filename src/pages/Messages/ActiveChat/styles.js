@@ -60,7 +60,7 @@ export const MessageSent = styled.div`
   padding: 10px;
 
   border-radius: 5px;
-  background: #BFE3FF;
+  background: #bfe3ff;
 `;
 
 export const MessageReceived = styled.div`
@@ -71,12 +71,12 @@ export const MessageReceived = styled.div`
   padding: 10px;
 
   border-radius: 5px;
-  background: #D4D4D4;
+  background: #d4d4d4;
 `;
 
 export const SenderName = styled.span`
   font-weight: bold;
-  color: #B53EEC;
+  color: #b53eec;
 `;
 
 export const ReceiverName = styled.span`
@@ -97,7 +97,18 @@ export const ChatForm = styled(Form)`
   align-items: center;
 
   button {
-    display: none;
+    background: transparent;
+    border: 0;
+
+    display: flex;
+
+    svg {
+      width: 20px;
+      height: 20px;
+      margin-left: 10px;
+
+      fill: #444;
+    }
   }
 `;
 

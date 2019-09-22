@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import io from 'socket.io-client';
 import { toast } from 'react-toastify';
+import { MdSend } from 'react-icons/md';
 
 import api from '~/services/api';
 
@@ -61,10 +62,10 @@ export default function ActiveChat({ user }) {
   }, [user]); // eslint-disable-line
 
   useEffect(() => {
-    const socket = io('http://localhost:3333/', {
+    const socket = io('https://windtech.dev', {
       secure: true,
       rejectUnauthorized: false,
-      path: '/socket.io',
+      path: '/api/socket.io',
       query: {
         user_id: id,
       },
@@ -80,6 +81,8 @@ export default function ActiveChat({ user }) {
   }, [messages]); // eslint-disable-line
 
   async function handleSubmit() {
+    if (!value) return;
+
     try {
       await api.post('/messages', { content: value, receiver_id: user.id });
 
@@ -128,11 +131,15 @@ export default function ActiveChat({ user }) {
 
       <ChatForm onSubmit={handleSubmit}>
         <Input
+          autoFocus
+          autoComplete="off"
           name="message"
           value={value}
           onChange={e => setValue(e.target.value)}
         />
-        <button type="submit" />
+        <button type="submit">
+          <MdSend />
+        </button>
       </ChatForm>
     </Container>
   );
