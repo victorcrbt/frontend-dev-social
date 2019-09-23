@@ -26,7 +26,7 @@ Button.propTypes = {
 };
 
 Button.defaultProps = {
-  loading: true,
+  loading: false,
   iconWidth: 40,
   iconHeight: 40,
 };
