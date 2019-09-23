@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import io from 'socket.io-client';
 import { toast } from 'react-toastify';
+import { MdSend } from 'react-icons/md';
 
 import api from '~/services/api';
 
@@ -37,26 +38,31 @@ export default function ActiveChat({ user }) {
     scrollChatToBottom();
   }, [messages]);
 
-  useEffect(() => {
-    async function loadMessages() {
-      try {
-        const response = await api.get('/messages', {
-          params: {
-            receiver_id: user.id,
-          },
-        });
+  async function loadMessages() {
+    try {
+      const response = await api.get('/messages', {
+        params: {
+          receiver_id: user.id,
+        },
+      });
 
-        setMessages(response.data);
-      } catch (err) {
-        toast.error(err.message);
-      }
+      setMessages(response.data);
+    } catch (err) {
+      toast.error(err.message);
     }
+  }
 
+  useEffect(() => {
     loadMessages();
   }, []); // eslint-disable-line
 
   useEffect(() => {
-    const socket = io('https://windtech.dev/', {
+    setMessages([]);
+    loadMessages();
+  }, [user]); // eslint-disable-line
+
+  useEffect(() => {
+    const socket = io('https://windtech.dev', {
       secure: true,
       rejectUnauthorized: false,
       path: '/api/socket.io',
@@ -66,7 +72,7 @@ export default function ActiveChat({ user }) {
     });
 
     socket.on('messageReceived', data => {
-      setMessages([...messages, data]);
+      if (data.sender_id === user.id) return setMessages([...messages, data]);
     });
 
     socket.on('messageSent', data => {
@@ -75,6 +81,8 @@ export default function ActiveChat({ user }) {
   }, [messages]); // eslint-disable-line
 
   async function handleSubmit() {
+    if (!value) return;
+
     try {
       await api.post('/messages', { content: value, receiver_id: user.id });
 
@@ -123,11 +131,15 @@ export default function ActiveChat({ user }) {
 
       <ChatForm onSubmit={handleSubmit}>
         <Input
+          autoFocus
+          autoComplete="off"
           name="message"
           value={value}
           onChange={e => setValue(e.target.value)}
         />
-        <button type="submit" />
+        <button type="submit">
+          <MdSend />
+        </button>
       </ChatForm>
     </Container>
   );

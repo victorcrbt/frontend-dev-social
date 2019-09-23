@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import signUpSchema from '~/validators/signUpValidator';
@@ -15,6 +15,7 @@ import { Container, RegisterForm, Logo } from './styles';
 
 export default function SignIn() {
   const dispatch = useDispatch();
+  const loading = useSelector(state => state.auth.loading);
 
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -73,7 +74,9 @@ export default function SignIn() {
           onChange={e => setConfirmPassword(e.target.value)}
         />
 
-        <Button type="submit">Criar conta</Button>
+        <Button loading={loading} type="submit">
+          Criar conta
+        </Button>
       </RegisterForm>
 
       <Link to="/">Já possui conta? Entre agora!</Link>

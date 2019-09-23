@@ -6,7 +6,7 @@ import TextArea from '~/components/TextArea';
 import Button from '~/components/Button';
 
 export const NewPost = styled(Form)`
-  padding: 10px 10px 0 10px;
+  padding: 10px 10px 10px 10px;
   margin-bottom: 20px;
 
   background: #fafafa;
@@ -15,6 +15,7 @@ export const NewPost = styled(Form)`
 
 export const Input = styled(TextArea)`
   height: ${props => (props.posting ? '200px' : '30px')};
+  margin-top: 10px;
   padding: 0;
 
   background: transparent;

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import { signInRequest } from '~/store/modules/auth/actions';
@@ -16,6 +16,7 @@ import { Container, Logo } from './styles';
 
 export default function SignIn() {
   const dispatch = useDispatch();
+  const loading = useSelector(state => state.auth.loading);
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -44,7 +45,9 @@ export default function SignIn() {
           onChange={e => setPassword(e.target.value)}
         />
 
-        <Button type="submit">Entrar</Button>
+        <Button loading={loading} type="submit">
+          Entrar
+        </Button>
       </Form>
 
       <Link to="/cadastro">Ainda não possui conta? Crie gratuitamente!</Link>

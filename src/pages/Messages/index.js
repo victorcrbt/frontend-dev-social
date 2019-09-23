@@ -18,13 +18,17 @@ export default function Messages() {
           data: { friend_list },
         } = await api.get('/friends');
 
-        friend_list.map(async friend_id => {
-          const response = await api.get(`/users/${friend_id}`);
+        const friendList = [];
 
-          setFriends([...friends, response.data]);
-        });
+        await Promise.all(
+          friend_list.map(async friend_id => {
+            const response = await api.get(`/users/${friend_id}`);
 
-        if (friend_list !== null) return setFriends(friend_list);
+            friendList.push(response.data);
+          })
+        );
+
+        setFriends(friendList);
       } catch (err) {
         toast.error(err.message);
       }
@@ -38,7 +42,7 @@ export default function Messages() {
       <Friends>
         {friends &&
           friends.map(friend => (
-            <Friend key={friend} onClick={() => setActiveChat(friend)}>
+            <Friend key={friend.id} onClick={() => setActiveChat(friend)}>
               <FriendAvatar
                 src={
                   friend.avatar
