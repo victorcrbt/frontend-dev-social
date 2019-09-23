@@ -33,6 +33,8 @@ export default function Profile() {
   const [file, setFile] = useState('');
 
   function handleSubmit() {
+    console.tron.log(file);
+
     dispatch(
       updateProfileRequest(
         {

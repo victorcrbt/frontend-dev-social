@@ -23,10 +23,14 @@ export function* updateProfile({ payload }) {
   };
 
   if (file) {
-    const response = yield call(api.post, '/avatars', file);
+    try {
+      const response = yield call(api.post, '/avatars', file);
 
-    data.avatar_id = response.data.file.id;
-    setFile('');
+      data.avatar_id = response.data.file.id;
+      setFile('');
+    } catch (err) {
+      toast.error(err.message);
+    }
   }
 
   try {
