@@ -19,7 +19,7 @@ import {
 
 export default function Profile() {
   const dispatch = useDispatch();
-  const profile = useSelector(state => state.user.profile);
+  const { profile, loading } = useSelector(state => state.user);
 
   const [firstName, setFirstName] = useState(profile.first_name || '');
   const [lastName, setLastName] = useState(profile.last_name || '');
@@ -123,7 +123,9 @@ export default function Profile() {
           onChange={e => setConfirmPassword(e.target.value)}
         />
 
-        <SubmitButton type="submit">Salvar perfil</SubmitButton>
+        <SubmitButton loading={loading} type="submit">
+          Salvar perfil
+        </SubmitButton>
       </ProfileForm>
     </Container>
   );
