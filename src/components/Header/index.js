@@ -51,6 +51,11 @@ export default function Header() {
     searchUser();
   }, [user]);
 
+  function handleRedirectToUser(user_id) {
+    history.push(`/usuario/${user_id}`);
+    setUser('');
+  }
+
   return (
     <Container>
       <Content>
@@ -75,7 +80,7 @@ export default function Header() {
                 {searchResults.map(result => (
                   <ResultItem
                     key={result.id}
-                    onClick={() => history.push(`/usuario/${result.id}`)}
+                    onClick={() => handleRedirectToUser(result.id)}
                   >
                     <ResultImage
                       src={

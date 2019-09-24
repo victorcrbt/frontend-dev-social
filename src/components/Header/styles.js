@@ -80,6 +80,7 @@ export const ResultList = styled.ul`
   margin-left: -20px;
   max-height: 200px;
   z-index: 99;
+  box-shadow: 0px 0px 5px 1px #444;
 
   border-radius: 5px;
   list-style: none;

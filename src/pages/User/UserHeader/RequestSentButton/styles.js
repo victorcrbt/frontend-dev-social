@@ -19,4 +19,14 @@ export const Container = styled(Button)`
 
     flex: 0 0 16px;
   }
+
+  @media screen and (max-width: 768px) and (min-width: 426px) {
+    max-width: 250px;
+    margin-bottom: 0;
+  }
+
+  @media screen and (max-width: 426px) {
+    margin-bottom: 0;
+    max-width: 310px;
+  }
 `;

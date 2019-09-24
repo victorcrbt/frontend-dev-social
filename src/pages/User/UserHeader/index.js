@@ -124,8 +124,6 @@ export default function UserHeader({ user, setUser }) {
             Enviar mensagem
           </SendMessageButton>
         </Controls>
-
-        <FriendCount>150 amigos</FriendCount>
       </Right>
     </Container>
   );
