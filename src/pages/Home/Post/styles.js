@@ -4,6 +4,7 @@ import TextArea from '~/components/TextArea';
 import Button from '~/components/Button';
 
 export const Container = styled.div`
+  width: 100%;
   margin-bottom: 15px;
   padding: 10px;
 

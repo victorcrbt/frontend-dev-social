@@ -5,7 +5,11 @@ import Form from '~/components/Form';
 import TextArea from '~/components/TextArea';
 import Button from '~/components/Button';
 
-export const Container = styled.div``;
+export const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
 
 export const NewPost = styled(Form)`
   padding: 10px 10px 0 10px;

@@ -9,6 +9,8 @@ import Post from './Post';
 
 import { Container } from './styles';
 
+import { ReactComponent as Loading } from '~/assets/loading.svg';
+
 const schema = yup.object().shape({
   post: yup.string().required('Você não pode salvar um post em branco.'),
 });
@@ -17,15 +19,20 @@ export default function Home() {
   const [content, setContent] = useState('');
   const [posting, setPosting] = useState(false);
   const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     async function loadPosts() {
+      setLoading(true);
+
       try {
         const response = await api.get('/posts');
 
         setPosts(response.data);
+        setLoading(false);
       } catch (err) {
         toast.error(err.message);
+        setLoading(false);
       }
     }
 
@@ -77,6 +84,8 @@ export default function Home() {
         setPosting={setPosting}
         handleCancel={handleCancel}
       />
+
+      {loading && <Loading width="50px" height="50px" />}
 
       {posts.map(post => (
         <Post post={post} key={post.id} handleDelete={handleDelete} />
